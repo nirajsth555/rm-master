@@ -117,7 +117,7 @@
 						<div class="title-section">
 							<h2>Get in touch</h2>
 						</div> 
-						<form id="contactform"  method="POST" action="" novalidate="novalidate" class="form-info style2">
+						<form id="contactform"  method="POST" action="contact" novalidate="novalidate" class="form-info style2">
 						<input type="hidden" name="_token" value="{{csrf_token()}}">
 						<div class="form-message" style="display: none;">
                          <!-- Success and error messages form ajax goes here -->

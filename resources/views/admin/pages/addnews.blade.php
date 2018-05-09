@@ -23,7 +23,7 @@
 
 
 @endif
-            <form action="{{url('post-news')}}" method="POST"  enctype="multipart/form-data">
+            <form action="{{url('post-news')}}" method="POST"  enctype="multipart/form-data" id="addNewsForm">
               <input type="hidden" name="_token" value="{{csrf_token()}}">
             <div class="col-md-12">
               <div class="form-message" style="display: none;">

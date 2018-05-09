@@ -158,6 +158,7 @@
         $('#contactform').each(function() {
             $(this).validate({
                 submitHandler: function( form ) {
+                    debugger;
                     var $form = $(form),
                         str = $form.serialize(),
                         loading = $('<div />', { 'class': 'loading' });
@@ -170,8 +171,16 @@
                             $form.find('.form-submit').append(loading);
                         },
                         success: function( msg ) {
-                            var result, cls;                            
-                            if ( msg === 'Success' ) {result = 'Message Sent Successfully To Email Administrator. ( You can change the email management a very easy way to get the message of customers in the user manual )'; cls = 'msg-success'; } else {result = 'Error sending email.'; cls = 'msg-error'; } $form.prepend(
+                            debugger;
+                            var result, cls;
+                            if ( msg.message ) {
+                                result = msg.message;
+                                cls = 'msg-success';
+                            } else {
+                                result = msg.error;
+                                cls = 'msg-error';
+                            }
+                            $form.prepend(
                                 $('<div />', {
                                     'class': 'flat-alert ' + cls,
                                     'text' : result
@@ -180,7 +189,7 @@
                                 )
                             );
 
-                            $form.find(':input').not('.submit').val('');
+                            $form.find(':input').not('.submit,input[name="_token"]').val('');
                         },
                         complete: function (xhr, status, error_thrown) {
                             $form.find('.loading').remove();

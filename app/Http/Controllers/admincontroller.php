@@ -22,7 +22,7 @@ class admincontroller extends Controller
 {
     //
     public function __construct(){
-        $this->middleware('auth');
+        // $this->middleware('auth');
     }
     public function getIndexofadmin(){
     	return view('admin.pages.mainpage');
@@ -270,7 +270,7 @@ class admincontroller extends Controller
                 
                 'eng_editor'=>'required',
                 'nep_editor'=>'required',
-                'image'=>'required|dimensions:width=370, height=220'
+                // 'image'=>'required|dimensions:width=370, height=220'
             ],
             [
                 'eng_title.required'=>'Please write title in english',
@@ -296,18 +296,21 @@ class admincontroller extends Controller
         $file= $request->file('image');
         $filename= $file->getClientOriginalName();
         $location="public/newsimage/";
-        //$banner= Image::make($file->getRealPath());
-        //$banner->resize(100,100,function($constraint)){
-            //$constraint->aspectRatio();
-            
-        //}
+        //First save the original image
+        //Resize the image and save it to newsimage/thumbnails
+        $location_resized = "public/newsimage/thumbnails";
+        $thumbnail = Image::make($file->getRealPath());
         $file->move($location,$filename);
-        $image=$location.$filename;
+        $thumbnail->resize(100,100,function($constraint){
+            $constraint->aspectRatio();
+            
+        })->save($location_resized.'/'.$filename);
+        $image = $location.$filename;
         $obj->image = $image;
         //The created new model show be saved and success message should be sent as json response
         if ($obj->save()){
-            return redirect('add-news')->with('success_message','News was succesfully added');
-            //return response()->json(['message'=>'News added']);
+            // return redirect('add-news')->with('success_message','News was succesfully added');
+            return response()->json(['message'=>'News added']);
         }else{
             //If something goes wrong during save, show error
             return response()->json(['error'=>'The news could not be added']);
