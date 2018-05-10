@@ -22,7 +22,7 @@ class admincontroller extends Controller
 {
     //
     public function __construct(){
-        // $this->middleware('auth');
+        $this->middleware('auth');
     }
     public function getIndexofadmin(){
     	return view('admin.pages.mainpage');
@@ -306,7 +306,8 @@ class admincontroller extends Controller
             
         })->save($location_resized.'/'.$filename);
         $image = $location.$filename;
-        $obj->image = $image;
+        $obj->image = json_encode(['full_image' => $image,
+                                    'thumbnail_image' => $location_resized.'/'.$filename]);
         //The created new model show be saved and success message should be sent as json response
         if ($obj->save()){
             // return redirect('add-news')->with('success_message','News was succesfully added');

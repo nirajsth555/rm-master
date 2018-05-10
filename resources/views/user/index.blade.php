@@ -259,8 +259,11 @@
                 @foreach($n as $news)
                     <article class="main-post">
                         <div class="featured-post">
+                            <?php $images = json_decode($news->image); ?>
                             <a href="{{url('newsitem')}}/{{$news->id}}" title="">
-                                <img src="{{url($news->image)}}" alt="image">
+                                @if(isset($images))
+                                <img src="{{url($images->thumbnail_image)}}" alt="image">
+                                @endif
                             </a>
                         </div>
                         <div class="entry-post-title">

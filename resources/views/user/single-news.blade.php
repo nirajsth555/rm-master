@@ -25,7 +25,11 @@
 
 						<article class="main-post">
 							<div class="featured-post">
-								<img src="{{url($result->image)}}" alt="image" width="770px" height="385px" />
+								<?php $images = json_decode($result->image); ?>
+                                @if(isset($images))
+                                	<img src="{{url($images->full_image)}}" alt="image">
+                                @endif
+								<!-- <img src="{{url($result->image)}}" alt="image" width="770px" height="385px" /> -->
 							</div> 
 							<!-- images size for news page is 770*385 px -->
 							<div class="entry-post-title">
